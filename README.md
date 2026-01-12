@@ -48,7 +48,6 @@ WindowsEvents
 ```
 [![World Attack Map](World_Attack_Map.png)](World_Attack_Map.png)
 *Figure 1: Real-time map visualizing global RDP brute-force attempts.*
-
 ## Security Analysis & Findings
 
 During the monitoring period, the honeypot was subjected to massive automated brute-force campaigns:
