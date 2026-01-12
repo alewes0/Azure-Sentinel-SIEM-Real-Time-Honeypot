@@ -47,7 +47,7 @@ SIEM Proficiency: Developed skills in configuring Sentinel, managing Log Analyti
 ### 3. Live Attack Visualization
 The project culminated in the creation of a **Sentinel Workbook**. This interactive dashboard provided a real-time global map showing the density and origin of attacks. It allowed me to see exactly where in the world the brute-force attempts originated.
 
-![World Attack Map](World Attack Map.png)
+![World Attack Map] (World Attack Map.png)
 *Figure 1: Real-time map visualizing global RDP brute-force attempts.*
 
 ---
