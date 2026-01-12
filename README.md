@@ -45,7 +45,7 @@ let WindowsEvents = SecurityEvent
     | where EventID == 4625
     | evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network);
 WindowsEvents
-
+```
 [![World Attack Map](World_Attack_Map.png)](World_Attack_Map.png)
 *Figure 1: Real-time map visualizing global RDP brute-force attempts.*
 
