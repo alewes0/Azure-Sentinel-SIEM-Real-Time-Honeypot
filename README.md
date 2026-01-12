@@ -49,6 +49,14 @@ WindowsEvents
 [![World Attack Map](World_Attack_Map.png)](World_Attack_Map.png)
 *Figure 1: Real-time map visualizing global RDP brute-force attempts.*
 
+## Security Analysis & Findings
+
+During the monitoring period, the honeypot was subjected to massive automated brute-force campaigns:
+
+* **Massive Attack Volumes:** A single source in **Jordanów, Poland** accounted for over **45,000** failed login attempts.
+* **Global Reach:** Significant activity was also recorded from **Ranchos, Argentina**, with over **22,600** attempts.
+* **Rapid Discovery:** The VM was discovered by automated botnets within minutes of the **Network Security Group (NSG)** being opened to the internet.
+
 ---
 
 ## Key Takeaways
