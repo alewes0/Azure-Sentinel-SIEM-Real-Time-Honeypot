@@ -1,59 +1,50 @@
-# Azure Sentinel (SIEM) & Real-Time Honeypot
+# Azure Sentinel (SIEM) & Real-Time Honeypot Lab
 
 ## Introduction
-This project demonstrates the setup of a cloud-native **SIEM (Microsoft Sentinel)** integrated with a live virtual machine acting as a **Honeypot**. The goal was to observe, analyze, and visualize real-world RDP brute-force attacks from across the globe in real-time.
+This project demonstrates the setup of a cloud-native **SIEM (Microsoft Sentinel)** connected to a live Windows 10 Virtual Machine acting as a **Honeypot**. The objective was to expose a vulnerable system to the public internet, capture RDP brute-force attacks, and use **KQL (Kusto Query Language)** to enrich the logs with geographic location data for real-time visualization.
 
 ---
 
 ## Architecture & Data Flow
-* **Azure Virtual Machine:** A Windows VM was deployed with its Network Security Group (NSG) intentionally misconfigured to allow all incoming traffic (RDP port 3389).
-* **Custom PowerShell Script:** A script ran continuously on the VM to monitor Windows Event Viewer for failed login attempts (**Event ID 4625**).
-* **API Integration:** The script sent the attacker's IP addresses to a **Geolocation API** to retrieve latitude, longitude, and country data.
-* **Log Analytics Workspace:** The enriched log data was forwarded to a custom log in Azure Log Analytics for indexing.
-* **Microsoft Sentinel:** Used **KQL (Kusto Query Language)** to query the logs and visualize the attack patterns on a world map.
+1. **Honeypot Deployment:** A Windows 10 VM was deployed with its Network Security Group (NSG) and Windows Firewall disabled to attract all inbound traffic.
+2. **Log Ingestion:** Security events (Event ID 4625 - Failed Logon) were forwarded to a **Log Analytics Workspace** using the **Azure Monitor Agent (AMA)** and a **Data Collection Rule (DCR)**.
+3. **Data Enrichment:** A custom **Watchlist** (`geoip-summarized.csv`) containing ~54,000 rows of geographic IP data was imported into Sentinel.
+4. **Analysis & Visualization:** Custom KQL queries were used to map IP addresses to physical locations, visualizing the results in a **Sentinel Workbook**.
 
 ---
 
 ## Technologies & Platforms Used
 * **Cloud Infrastructure:** Microsoft Azure (Virtual Machines, Network Security Groups)
 * **SIEM:** Microsoft Sentinel
-* **Log Management:** Log Analytics Workspaces
-* **Scripting:** PowerShell (Data extraction & API enrichment)
+* **Log Management:** Log Analytics Workspaces (LAW)
+* **Log Forwarding:** Azure Monitor Agent (AMA) & Data Collection Rules (DCR)
 * **Query Language:** KQL (Kusto Query Language)
-* **Data Visualization:** Azure Sentinel Workbooks
-* **API:** IP-Geolocation.io
+* **Data Enrichment:** Sentinel Watchlists (GeoIP database)
+* **Visualization:** Azure Sentinel Workbooks (JSON-based maps)
 
 ---
 
 ## Project Implementation
 
-### 1. Data Collection & Enrichment
-The core of the data collection was a custom PowerShell script that transformed raw Windows Security logs into actionable intelligence by adding geographic coordinates.
+### 1. Honeypot Setup & Insecurity Configuration
+* Created a Windows 10 Virtual Machine in Azure and configured the NSG to allow **all traffic inbound** (Any/Any rule).
+* Logged into the VM and disabled the Windows Firewall for all profiles (Domain, Private, and Public) to ensure the system was fully reachable by external scanners.
 
-> **View the script here:** [Link to your script file in the repo]
+### 2. SIEM Configuration & Log Ingestion
+* Deployed a **Log Analytics Workspace** and a **Microsoft Sentinel** instance.
+* Configured the **Windows Security Events via AMA** connector to stream logs from the Honeypot to the LAW.
+* Verified log flow by manually failing login attempts on the VM and querying the `SecurityEvent` table for **Event ID 4625**.
 
-### 2. Analytical Queries (KQL)
-Once the data reached the cloud, I used **KQL** to parse the custom logs and prepare them for visualization:
+### 3. Log Enrichment via Sentinel Watchlist
+To identify the geographical origin of attacks, I imported a GeoIP database as a **Sentinel Watchlist** named `geoip`. This allowed me to correlate raw IP addresses with physical countries and coordinates directly in the SIEM.
 
-kusto
-FAILED_RDP_WITH_GEO_CL 
-| extend location = strcat(latitude, ',', longitude)
-| summarize event_count=count() by location, country, state, sourcehost
-
-Log Lifecycle: Mastered the flow of data from local event generation to cloud-based analysis and visualization.
-
-SIEM Proficiency: Developed skills in configuring Sentinel, managing Log Analytics Workspaces, and writing complex KQL queries.
-
-### 3. Live Attack Visualization
-The project culminated in the creation of a **Sentinel Workbook**. This interactive dashboard provided a real-time global map showing the density and origin of attacks. It allowed me to see exactly where in the world the brute-force attempts originated.
-
-## Security Analysis & Findings
-
-During the monitoring period, the honeypot was subjected to massive automated brute-force campaigns:
-
-* **Massive Attack Volumes:** A single source in **Jordanów, Poland** accounted for over **45,000** failed login attempts.
-* **Global Reach:** Significant activity was also recorded from **Ranchos, Argentina**, with over **22,600** attempts.
-* **Rapid Discovery:** The VM was discovered by automated botnets within minutes of the **Network Security Group (NSG)** being opened to the internet.
+**KQL Enrichment Query:**
+```kusto
+let GeoIPDB_FULL = _GetWatchlist("geoip");
+let WindowsEvents = SecurityEvent
+    | where EventID == 4625
+    | evaluate ipv4_lookup(GeoIPDB_FULL, IpAddress, network);
+WindowsEvents
 
 [![World Attack Map](World_Attack_Map.png)](World_Attack_Map.png)
 *Figure 1: Real-time map visualizing global RDP brute-force attempts.*
