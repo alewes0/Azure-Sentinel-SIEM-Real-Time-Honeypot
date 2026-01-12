@@ -1,5 +1,19 @@
 # Azure Sentinel (SIEM) & Real-Time Honeypot Lab
 
+![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
+![Microsoft Sentinel](https://img.shields.io/badge/Microsoft%20Sentinel-%230078D4.svg?style=for-the-badge&logo=microsoft&logoColor=white)
+![Kusto Query Language](https://img.shields.io/badge/KQL-Kusto%20Query-blue?style=for-the-badge)
+
+## 📋 Table of Contents
+- [Introduction](#introduction)
+- [Architecture & Data Flow](#architecture--data-flow)
+- [Technologies Used](#technologies--platforms-used)
+- [Implementation Steps](#project-implementation)
+- [Security Analysis & Findings](#security-analysis--findings)
+- [Future Improvements](#future-improvements)
+
+---
+
 ## Introduction
 This project demonstrates the setup of a cloud-native **SIEM (Microsoft Sentinel)** connected to a live Windows 10 Virtual Machine acting as a **Honeypot**. The objective was to expose a vulnerable system to the public internet, capture RDP brute-force attacks, and use **KQL (Kusto Query Language)** to enrich the logs with geographic location data for real-time visualization.
 
