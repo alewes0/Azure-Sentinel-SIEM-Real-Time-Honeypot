@@ -81,5 +81,5 @@ During the monitoring period, the honeypot was subjected to massive automated br
 ## 📜 Credits & References
 This project is based on a lab by **Josh Madakor**. The goal was to implement a cloud-native SIEM environment to observe real-world cyber attacks.
 
-- **Original Tutorial:** [Josh Madakor's Azure Sentinel Lab]
+- **Original Tutorial:** Josh Madakor's Azure Sentinel Lab
 - **Dataset:** GeoIP database provided by Josh Madakor.
