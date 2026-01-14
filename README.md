@@ -75,3 +75,11 @@ During the monitoring period, the honeypot was subjected to massive automated br
 * **Threat Landscapes:** Gained a firsthand look at how quickly exposed assets are discovered by automated botnets. Within minutes of deployment, attacks were logged from multiple countries.
 * **Log Lifecycle:** Mastered the flow of data from local event generation to cloud-based analysis and visualization.
 * **SIEM Proficiency:** Developed practical skills in configuring Sentinel, managing Log Analytics Workspaces, and writing complex KQL queries to handle custom logs.
+
+---
+
+## 📜 Credits & References
+This project is based on a lab by **Josh Madakor**. The goal was to implement a cloud-native SIEM environment to observe real-world cyber attacks.
+
+- **Original Tutorial:** [Josh Madakor's Azure Sentinel Lab]
+- **Dataset:** GeoIP database provided by Josh Madakor.
