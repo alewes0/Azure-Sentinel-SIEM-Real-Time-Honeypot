@@ -4,7 +4,7 @@
 ![Microsoft Sentinel](https://img.shields.io/badge/Microsoft%20Sentinel-%230078D4.svg?style=for-the-badge&logo=microsoft&logoColor=white)
 ![Kusto Query Language](https://img.shields.io/badge/KQL-Kusto%20Query-blue?style=for-the-badge)
 
-## 📋 Table of Contents
+##  Table of Contents
 - [Introduction](#introduction)
 - [Architecture & Data Flow](#architecture--data-flow)
 - [Technologies Used](#technologies--platforms-used)
