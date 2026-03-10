@@ -27,7 +27,7 @@ This project demonstrates the setup of a cloud-native **SIEM (Microsoft Sentinel
 
 ---
 
-## 🛠 Technologies & Platforms Used
+##  Technologies & Platforms Used
 * **Cloud Infrastructure:** Microsoft Azure (Virtual Machines, Network Security Groups)
 * **SIEM:** Microsoft Sentinel
 * **Log Management:** Log Analytics Workspaces (LAW)
